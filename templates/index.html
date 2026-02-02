@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+         <title>ascii-art-web</title>
+        <style>
+            body{
+                font-family: Arial, sans-serif;
+                background-color: #f4f6f8;
+                margin: 0;
+                padding: 0;
+            }
+            .container {
+                max-width: 800px;
+                margin:50px auto;
+                background: #ffffff;
+                padding: 30px;
+                border-radius: 10px;
+                box-shadow: 0 4px 10px rgba((0,0,0,0.1), green, blue, alpha);
+
+            }
+            h1{
+                text-align: center;
+                margin-bottom: 20px;
+            }
+            form {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+            }
+            textarea{
+                resize: vertical;
+                padding: 10x;
+                font-size: 14px;
+            }
+            .banners{
+                display: flex;
+                gap: 20px;
+            }
+            button:hover {
+			background-color: #0056b3;
+		}
+
+		pre {
+			background-color: #111;
+			color: rgb(39, 231, 231);
+			padding: 20px;
+			border-radius: 5px;
+			overflow-x: auto;
+		}
+        </style>
+    </head>
+    <body>
+       <div class="container">
+
+       <h1>Ascii Art Generator</h1>
+    <form method="post" action="/ascii-art">
+        <textarea name="text"></textarea>
+        <input type="radio" name="banner" value="standard">Standard
+        <input type="radio" name="banner" value="shadow">Shadow
+        <input type="radio" name="banner" value="shadow">Thinkertoy
+
+        <button type="submit">Generate</button>    
+
+    </form>
+
+    {{if .Result}}
+		<h2>Result:</h2>
+		<pre>{{.Result}}</pre>
+	{{end}}
+    </div>
+    </body>
+</html>
