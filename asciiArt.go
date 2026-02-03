@@ -3,6 +3,7 @@ package main
 import(
 	"strings"
 	"os"
+	"fmt"
 )
 
 func AsciiArt(input string,banner string) (string, error){
@@ -10,10 +11,14 @@ func AsciiArt(input string,banner string) (string, error){
 
 	bannerPath := "banners/" + banner
 
+	
 	data , err := os.ReadFile(bannerPath)
 	if err != nil{
 		return "",err
 	}
+	fmt.Println(input)
+	input = strings.ReplaceAll(input, "\r\n", "\n")
+
 var result strings.Builder
 	//split banner file by newline
 	lines := strings.Split(string(data), "\n")

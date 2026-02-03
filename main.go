@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"html/template"
 	"fmt"
+	"strings"
 )
 
 func main(){
@@ -37,44 +38,70 @@ func homeHandler(w http.ResponseWriter, r *http.Request){
 	}
 
 	//asciiArtHandler
-func asciiArtHandler(w http.ResponseWriter, r *http.Request){
-		if r.Method != http.MethodPost {
-			http.Error(w, "Method not allowed", http.StatusBadRequest)
-			return
+func asciiArtHandler(w http.ResponseWriter, r *http.Request) {
+	defer func() {
+		if r := recover(); r != nil {
+			http.Error(w, "Internal server error", http.StatusInternalServerError)
 		}
-		err := r.ParseForm()
-		if err != nil{
-			http.Error(w, "Bad request", http.StatusBadRequest)
-			return
+	}()
 
-		}
-
-		text := r.FormValue("text")
-		banner := r.FormValue("banner")
-
-		if text == "" || banner == ""{
-			http.Error(w, "Missing input", http.StatusBadRequest)
-			return
-		}
-
-	result, err := AsciiArt(text, banner)
-	if err != nil{
-		http.Error(w, "Internal server error", http.StatusInternalServerError)
-			return
+	if r.Method != http.MethodPost {
+		http.Error(w, "Method not allowed", http.StatusBadRequest)
+		return
 	}
 
+	err := r.ParseForm()
+	if err != nil {
+		http.Error(w, "Bad request", http.StatusBadRequest)
+		return
+	}
+
+	text := r.FormValue("text")
+	banner := r.FormValue("banner")
+
+	if text == "" || banner == "" {
+		http.Error(w, "Missing input", http.StatusBadRequest)
+		return
+	}
+
+	text = strings.ReplaceAll(text, "\r\n", "\n")
+	text = strings.ReplaceAll(text, "\r", "\n")
+
+	// Split input into lines and generate ASCII art line by line
+	lines := strings.Split(text, "\n")
+	var finalResult string
+	for _, line := range lines {
+		if line == "" {
+			finalResult += "\n"
+			continue
+		}
+
+		part, err := AsciiArt(line, banner)
+		if err != nil {
+			http.Error(w, "Internal server error", http.StatusInternalServerError)
+			return
+		}
+
+		finalResult += part + "\n"
+	}
+
+	// Parse the template
 	tmpl, err := template.ParseFiles("templates/index.html")
 	if err != nil {
 		http.Error(w, "Template not found", http.StatusNotFound)
 		return
 	}
 
-	data:= struct{
-		Result string
+	// Convert spaces and newlines for HTML display
+	fresult := strings.ReplaceAll(finalResult, " ", "&nbsp;")
+	fresult = strings.ReplaceAll(fresult, "\n", "<br>")
+
+	// Pass to template
+	data := struct {
+		Result template.HTML
 	}{
-		Result: result,
-	}
-	tmpl.Execute(w, data)
+		Result: template.HTML(fresult),
 	}
 
-	
+	tmpl.Execute(w, data)
+}
