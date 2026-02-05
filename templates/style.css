@@ -1,0 +1,79 @@
+/* Global body settings */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 50px;
+    background-color: #f4f6f8;
+}
+
+/* Main container for form and result */
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Heading */
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Form layout */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Textarea styling */
+textarea {
+    width: 100%;
+    height: 120px;
+    font-size: 16px;
+    padding: 10px;
+    resize: vertical;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Banner radio buttons container */
+.banner-options {
+    margin: 15px 0;
+}
+
+/* Buttons styling */
+button {
+    background-color: rgb(45, 167, 223);
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: none;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: rgb(0, 120, 200);
+}
+
+/* ASCII result display */
+pre {
+    background-color: #111;
+    padding: 20px;
+    white-space: pre-wrap;
+    color: #0ff;
+    overflow-x: auto;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+/* Optional error display */
+.error {
+    color: red;
+    font-weight: bold;
+    margin-top: 10px;
+}
