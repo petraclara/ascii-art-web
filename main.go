@@ -9,8 +9,13 @@ import (
 	"ascii-art-web/asciiArt"
 )
 
+<<<<<<< HEAD
 func main() {
 	// Serve files inside templates/ (images, extra html if any)
+=======
+func main(){
+		// Serve files inside templates/ (images, extra html if any)
+>>>>>>> main
 	templateFS := http.FileServer(http.Dir("templates"))
 	http.Handle("/templates/", http.StripPrefix("/templates/", templateFS))
 
@@ -19,10 +24,33 @@ func main() {
 	http.HandleFunc("/ascii-art", asciiArtHandler)
 
 	fmt.Println("Server running on http://localhost:8080")
+<<<<<<< HEAD
 	if err := http.ListenAndServe(":8080", nil); err != nil {
 		fmt.Println("Server error:", err)
 	}
 }
+=======
+	http.ListenAndServe(":8080", nil)
+
+}
+//homeHandler
+func homeHandler(w http.ResponseWriter, r *http.Request){
+	if r.URL.Path != "/"{
+		http.NotFound(w,r)
+		return
+	}
+		if r.Method != http.MethodGet {
+			http.Error(w, "Method not allowed", http.StatusBadRequest)
+			return
+		}
+		tmpl,err := template.ParseFiles("templates/index.html")
+		if err != nil{
+			http.Error(w, "Template not found", http.StatusNotFound)
+			return
+
+		}
+		tmpl.Execute(w, nil)
+>>>>>>> main
 
 // homeHandler handles GET /
 func homeHandler(w http.ResponseWriter, r *http.Request) {
@@ -46,7 +74,15 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 
 // asciiArtHandler handles POST /ascii-art
 func asciiArtHandler(w http.ResponseWriter, r *http.Request) {
+<<<<<<< HEAD
 	// Recover from panics → 500 error
+=======
+	if r.URL.Path !="/ascii-art"{
+		http.NotFound(w,r)
+		return
+	}
+	
+>>>>>>> main
 	defer func() {
 		if rec := recover(); rec != nil {
 			http.Error(w, "Internal server error", http.StatusInternalServerError)
