@@ -106,3 +106,50 @@ Example Flow
 3. Select banner: `standard`
 4. Submit the form → POST `/ascii-art`
 5. Server returns the home page with ASCII art rendered in the result section.
+
+ # Quick Test Commands(Trigger HTTp Status Codes)
+
+1.200 OK (Success)
+
+  - Home page GET
+
+    - curl -i http://localhost:8080/
+
+  - ASCII art POST
+
+    - curl -i -X POST http://localhost:8080/ascii-art -d "text=Hello&banner=standard"
+Returns 200 OK and the ASCII art result.
+
+2.400 Bad Request
+
+  - Triggered by missing input or wrong HTTP method:
+
+  - Wrong method on home page
+
+    - curl -i -X POST http://localhost:8080/
+  - Wrong method on /ascii-art
+
+    - curl -i http://localhost:8080/ascii-art
+  - Missing text field
+
+    - curl -i -X POST http://localhost:8080/ascii-art -d "banner=standard"
+
+All return 400 Bad Request.
+
+3.404 Not Found
+
+  - Triggered when a resource or route is missing:
+
+  - Invalid route
+
+    - curl -i http://localhost:8080/invalidpath
+  - Non-existent banner
+
+    - curl -i -X POST http://localhost:8080/ascii-art -d "text=Hello&banner=nonexistent"
+  - Missing template file
+
+    - Temporarily rename templates/index.html:
+
+      - mv templates/index.html templates/index_backup.html
+      - curl -i http://localhost:8080/
+All return 404 Not Found.
