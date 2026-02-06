@@ -107,49 +107,39 @@ Example Flow
 4. Submit the form → POST `/ascii-art`
 5. Server returns the home page with ASCII art rendered in the result section.
 
- # Quick Test Commands(Trigger HTTp Status Codes)
+AUTHORS
+1 Clare
+2 Andrew Okutu
+3 Flovian Atieno
 
-1.200 OK (Success)
+HOW TO RUN 
 
-  - Home page GET
+1 Ensure  Golang is   installed  into  your  machine 
+2 CLone ti  your  local  machine   https://learn.zone01kisumu.ke/git/cgisclar/ascii-art-web.git
+3 Navigate  to the ascii-art-web directory  from your  cloned folder using  the Terminal 
+4 Ensure   within that directroy  ls   you can  se  main.go  file 
+5 From the  terminal  run go "go run ."  to start the web server 
+6 Open  your browser and on the  address type http://localhost:8080 
+7 A  page will  open  which  you wil feed  your  text  and when  you  submit  it generates  its  ASCII graphic  representation 
 
-    - curl -i http://localhost:8080/
 
-  - ASCII art POST
 
-    - curl -i -X POST http://localhost:8080/ascii-art -d "text=Hello&banner=standard"
-Returns 200 OK and the ASCII art result.
+Implementation Details: Algorithm
 
-2.400 Bad Request
+The program runs a web server that converts user text into ASCII art.
 
-  - Triggered by missing input or wrong HTTP method:
+The server starts on port 8080 and listens for requests.
 
-  - Wrong method on home page
+The home page (/) displays an HTML form to the user.
 
-    - curl -i -X POST http://localhost:8080/
-  - Wrong method on /ascii-art
+When the form is submitted, the /ascii-art route receives the text and banner.
 
-    - curl -i http://localhost:8080/ascii-art
-  - Missing text field
+The input text is cleaned and split into lines.
 
-    - curl -i -X POST http://localhost:8080/ascii-art -d "banner=standard"
+Each line is converted into ASCII art using the selected banner.
 
-All return 400 Bad Request.
+The generated ASCII art is formatted for HTML and displayed on the page.
 
-3.404 Not Found
 
-  - Triggered when a resource or route is missing:
 
-  - Invalid route
 
-    - curl -i http://localhost:8080/invalidpath
-  - Non-existent banner
-
-    - curl -i -X POST http://localhost:8080/ascii-art -d "text=Hello&banner=nonexistent"
-  - Missing template file
-
-    - Temporarily rename templates/index.html:
-
-      - mv templates/index.html templates/index_backup.html
-      - curl -i http://localhost:8080/
-All return 404 Not Found.
