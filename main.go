@@ -23,6 +23,10 @@ func main(){
 }
 //homeHandler
 func homeHandler(w http.ResponseWriter, r *http.Request){
+	if r.URL.Path != "/"{
+		http.NotFound(w,r)
+		return
+	}
 		if r.Method != http.MethodGet {
 			http.Error(w, "Method not allowed", http.StatusBadRequest)
 			return
@@ -39,6 +43,11 @@ func homeHandler(w http.ResponseWriter, r *http.Request){
 
 	//asciiArtHandler
 func asciiArtHandler(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path !="/ascii-art"{
+		http.NotFound(w,r)
+		return
+	}
+	
 	defer func() {
 		if r := recover(); r != nil {
 			http.Error(w, "Internal server error", http.StatusInternalServerError)
