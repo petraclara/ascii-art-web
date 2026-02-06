@@ -8,17 +8,15 @@ import (
 )
 
 func main(){
-	//start server
+		// Serve files inside templates/ (images, extra html if any)
+	templateFS := http.FileServer(http.Dir("templates"))
+	http.Handle("/templates/", http.StripPrefix("/templates/", templateFS))
 
 	http.HandleFunc("/",  homeHandler)
 	http.HandleFunc("/ascii-art",  asciiArtHandler)
 
 	fmt.Println("Server running on http://localhost:8080")
 	http.ListenAndServe(":8080", nil)
-
-	    
-
-	
 
 }
 //homeHandler
