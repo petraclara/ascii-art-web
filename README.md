@@ -106,3 +106,40 @@ Example Flow
 3. Select banner: `standard`
 4. Submit the form → POST `/ascii-art`
 5. Server returns the home page with ASCII art rendered in the result section.
+
+AUTHORS
+1 Clare
+2 Andrew Okutu
+3 Flovian Atieno
+
+HOW TO RUN 
+
+1 Ensure  Golang is   installed  into  your  machine 
+2 CLone ti  your  local  machine   https://learn.zone01kisumu.ke/git/cgisclar/ascii-art-web.git
+3 Navigate  to the ascii-art-web directory  from your  cloned folder using  the Terminal 
+4 Ensure   within that directroy  ls   you can  se  main.go  file 
+5 From the  terminal  run go "go run ."  to start the web server 
+6 Open  your browser and on the  address type http://localhost:8080 
+7 A  page will  open  which  you wil feed  your  text  and when  you  submit  it generates  its  ASCII graphic  representation 
+
+
+
+Implementation Details: Algorithm
+
+The program runs a web server that converts user text into ASCII art.
+
+The server starts on port 8080 and listens for requests.
+
+The home page (/) displays an HTML form to the user.
+
+When the form is submitted, the /ascii-art route receives the text and banner.
+
+The input text is cleaned and split into lines.
+
+Each line is converted into ASCII art using the selected banner.
+
+The generated ASCII art is formatted for HTML and displayed on the page.
+
+
+
+
